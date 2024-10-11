@@ -1,6 +1,5 @@
 import streamlit as st
 from core import run_llm
-from streamlit_chat import message
 
 # Set page title and header for better user experience
 st.set_page_config(page_title="Pandas Documentation Helper Bot", page_icon="🤖")
