@@ -2,10 +2,10 @@ import streamlit as st
 from core import run_llm
 
 # Set page title and header for better user experience
-st.set_page_config(page_title="Pandas Documentation Helper Bot", page_icon="🤖")
-st.title("Pandas Documentation Helper Bot")
+st.set_page_config(page_title="Langchain bot", page_icon="🤖")
+st.title("Langchain assistant")
 
-# Custom CSS for gradient background and message styles
+# Custom CSS for gradienPA  and message styles
 st.markdown(
     """
     <style>
@@ -71,7 +71,7 @@ def create_source_string(source_docs: list) -> str:
     return sources_string
 
 # Input for the user's prompt
-prompt = st.text_input("Ask a question related to Pandas documentation", placeholder="Enter your prompt")
+prompt = st.text_input("Ask a question related to langchaing documentation", placeholder="Enter your prompt")
 
 # Handling the response from the LLM
 if prompt and not st.session_state["response_pending"]:

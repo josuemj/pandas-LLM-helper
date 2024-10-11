@@ -5,6 +5,7 @@ from langchain_community.document_loaders import UnstructuredHTMLLoader
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Pinecone
 
+from consts import INDEX_NAME
 # Load environment variables from .env
 load_dotenv()
 
@@ -23,7 +24,8 @@ def get_html_files(directory):
 # Ingest documents
 def ingest_docs():
     # Specify the root directory of your downloaded files
-    html_files = get_html_files("pandas-docs/pandas/pandas.pydata.org/docs")
+    html_files = get_html_files("langchaing-docs/api.python.langchain.com/en/latest")
+
     print(f"Found {len(html_files)} HTML files")
 
     raw_documents = []
@@ -47,13 +49,14 @@ def ingest_docs():
     # Add source metadata to each document
     for doc in documents:
         new_url = doc.metadata.get("source", "")
-    if new_url:
-        new_url = new_url.replace("pandas-docs", "https://pandas.pydata.org")
-        doc.metadata.update({"source": new_url})
+        if new_url:
+            # Adjusting the URL to match the LangChain docs URL structure
+            new_url = new_url.replace("langchain-docs/api.python.langchain.com/en/latest", "https://api.python.langchain.com/en/latest")
+            doc.metadata.update({"source": new_url})
 
     # Now add to Pinecone (ensure Pinecone is initialized elsewhere)
     print(f"Going to add {len(documents)} documents to Pinecone")
-    Pinecone.from_documents(documents, embeddings, index_name="langchain-doc-index")
+    Pinecone.from_documents(documents, embeddings, index_name=INDEX_NAME)
 
 # Call the function to ingest documents
 if __name__ == "__main__":
